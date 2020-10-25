@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4">
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Podcasts" name="search"
+                    aria-label="Search Podcasts">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Podcasts</button>
+            </form>
+        </div>
+    </div>
+</div>
+</form>
+<h1 class="text-center">Listen to your favourite podcast around the globe</h1>
+<br>
+<div class="container">
+    <div class="row">
+        {% if not podcasts %}
+        <h3 class="alert alert-danger text-center" role="alert">Sorry! We have no songs to show yet!</h3>
+        {% else %}
+        {% for podcast in podcasts %}
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <h2 class="text-center">{{podcast.name}}</h2>
+            <a href="{{url_for('podcast', podcast_id = podcast.id)}}" class="text-decoration-none">
+                <img src="{{url_for('static', filename ='covers/' + podcast.image_file)}}" height="200px" ,
+                    width="200px" class="img-rounded rounded mx-auto d-block">
+            </a>
+            <a href="{{url_for('podcast', podcast_id = podcast.id)}}"
+                class="text-decoration-none text-uppercase text-center">
+                <h4>{{podcast.title}}</h4>
+            </a>
+            <h4 class="text-center">By-{{podcast.podcast.name}}</h4>
+            <h4 class="text-center">Description-{{podcast.description}}</h4>
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

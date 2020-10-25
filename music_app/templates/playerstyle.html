@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title  %}
+            <title>Needs - {{title}}</title>
+        {% else %}
+            <title>Welcome to Needs</title>
+
+        {% endif %}
+    <script type = 'text/javascript' src="/static/jquery-3.5.1.js"></script>
+
+    </head>
+    <body>
+        <div>
+            {% if current_user.is_authenticated %}
+            <a href = "{{url_for('home')}}">Home</a>
+            |
+            <a href = "{{url_for('account')}}">Account</a>
+            |
+            <a href = "{{url_for('post_landing')}}">Blog</a>
+            |
+            <a href = "{{url_for('new_post')}}">Upload Blog</a>
+            |
+            <a href = "{{url_for('new_song')}}">Upload Song</a>
+            |
+            <a href = "{{url_for('logout')}}">Logout</a>
+            {% else %}
+            <a href = "{{url_for('home')}}">Home</a>
+            |
+            <a href = "{{url_for('login')}}">Login</a>
+            |
+            <a href = "{{url_for('register')}}">Register</a>
+            {% endif %}
+        </div>
+        <h1><em>Needs</em></h1>
+        <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages%}
+                    {%for category, message in messages%}
+                        <div>
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+  <!-- Full Page Intro -->
+        <div class="view">
+          <!-- Mask & flexbox options-->
+          <div class="mask gradient-card align-items-center">
+            <!-- Content -->
+            <div class="container d-flex justify-content-center my-4">
+
+              <div id="mobile-box">
+
+                  <h4 class="my-5 h5 text-center" style="color:rgb(235, 232, 234)">Just click<i class="fas fa-play ml-2"></i></h4>
+
+                <!-- Card -->
+                <div class="card">
+
+                  <!-- Card image -->
+                  <div class="view">
+                    <img class="card-img-top" src= "{{url_for('static', filename ='covers/' + song.image_file)}}"
+                      alt="Card image cap">
+                    <a href="https://bachataurban.com/" target="_blank">
+                      <div class="mask gradient-card"></div>
+                    </a>
+                  </div>
+
+                  <!-- Card content -->
+                  <div class="card-body text-center">
+
+                    <h5 class="h5 font-weight-bold"><a href="https://bachataurban.com/" target="_blank">{{song.singer.name}}</a></h5>
+                    <p class="mb-0">Genre- {{song.genre}}</p>
+
+                    <audio id="music" preload="true">
+                        <source src="{{url_for('static', filename ='/song_dir/' + song.song_file)}}" type="audio/mpeg">
+                    </audio>
+                    <div id="audioplayer">
+                        <i id="pButton" class="fas fa-play"></i>
+                        <div id="timeline">
+                            <div id="playhead"></div>
+                        </div>
+                    </div>
+                    <div>
+                      {% if song.singer == current_user %}
+                          <a href = "{{url_for('update_song', song_id=song.id)}}" >UPDATE SONG</a>
+                          |
+                          <a href = "{{url_for('delete_song', song_id=song.id)}}">DELETE SONG</a>
+                    </div>
+
+                  </div>
+
+                </div>
+                <!-- Card -->
+
+
+              </div>
+            </div>
+            <!-- Content -->
+          </div>
+          <!-- Mask & flexbox options-->
+        </div>
+  <!-- Full Page Intro -->
+     </body>
+  </html>

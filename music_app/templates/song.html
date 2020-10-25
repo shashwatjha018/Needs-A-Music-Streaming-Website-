@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ***** Featured Music Area Start ***** -->
+<div class="poca-featured-music-area mt-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-12">
+          <div class="poca-music-area box-shadow d-flex align-items-center flex-wrap border" data-animation="fadeInUp" data-delay="900ms">
+            <div class="poca-music-thumbnail">
+              <img src="{{url_for('static', filename ='covers/' + song.image_file)}}" height="200px"
+                        width="200px" class="img-rounded rounded mx-auto d-block" alt="Cover">
+            </div>
+            <div class="poca-music-content">
+              <span class="music-published-date">December 9, 2018</span>
+              <h2>{{song.name}}</h2>
+              <div class="music-meta-data">
+                <p>By <a href="#" class="music-author">{{song.singer.name}}</a> | <a href="#" class="music-catagory">{{song.genre}}</a> | <!--a href="#" class="music-duration">00:02:56</a--></p>
+              </div>
+              <!-- Music Player -->
+              <div class="poca-music-player">
+                <audio preload="auto" controls style="width:780px"  class="embed-responsive-item">
+                  <source src= "{{url_for('static', filename ='/song_dir/' + song.song_file)}}" type="audio/mpeg">
+                </audio>
+              </div>
+              <!-- Likes, Share & Download -->
+              <div class="likes-share-download d-flex align-items-center justify-content-between">
+                <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (29)</a>
+                <div>
+                  <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Share(04)</a>
+                  <a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download (12)</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Featured Music Area End ***** -->
+    <div class = "container">
+        <div class = "row">
+            <div class = "col col-xl-6">
+                <br>
+                <br>
+            </div>
+
+        </div>
+        <div class = "row">
+       
+            {% if song.singer == current_user %}
+            <div class = "col col-xl-6">
+                
+                    <a href = "{{url_for('update_song', song_id=song.id)}}">
+                        <div class = "text-center">
+                            <button type="button" class="btn btn-primary text-white btn-sm">UPDATE SONG</button>
+                        </div>
+                    </a>
+    
+            </div>
+            <div class = "col col-xl-6">
+                <a href = "{{url_for('delete_song', song_id=song.id)}}">
+                    <div class = "text-center">
+                        <button type="button" class="btn btn-danger text-white btn-sm">
+                            DELETE SONG
+
+                        </button>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

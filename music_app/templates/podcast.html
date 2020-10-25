@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ***** Featured Music Area Start ***** -->
+<div class="poca-featured-music-area mt-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-12">
+          <div class="poca-music-area box-shadow d-flex align-items-center flex-wrap border" data-animation="fadeInUp" data-delay="900ms">
+            <div class="poca-music-thumbnail">
+              <img src="{{url_for('static', filename ='covers/' + podcast.image_file)}}" height="200px"
+                        width="200px" class="img-rounded rounded mx-auto d-block" alt="Cover">
+            </div>
+            <div class="poca-music-content">
+              <span class="music-published-date">{{podcast.release_date.strftime('%Y-%m-%d')}}</span>
+              <h2>{{podcast.title}}</h2>
+              <div class="music-meta-data">
+                  <a href="#" class="music-author"><h3>{{podcast.name}}</h3></a><p>By <a href="#" class="music-author">{{podcast.podcast.name}}</a> | <a href="#" class="music-catagory">{{podcast.category}}</a> | <!--a href="#" class="music-duration">00:02:56</a--></p>
+              </div>
+              <!-- Music Player -->
+              <div class="poca-music-player">
+                <audio preload="auto" controls style="width: 780px">
+                  <source src="{{url_for('static', filename ='/song_dir/' + podcast.pod_file)}}" type="audio/mpeg">
+                </audio>
+              </div>
+              <!-- Likes, Share & Download -->
+              <div class="likes-share-download d-flex align-items-center justify-content-between">
+                <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (29)</a>
+                <div>
+                  <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Share(04)</a>
+                  <a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download (12)</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ***** Featured Music Area End ***** -->
+
+
+
+<!--h2>{{podcast.name}}</h2>
+
+<div>
+    <audio controls>
+        <source src="{{url_for('static', filename ='/song_dir/' + podcast.pod_file)}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+    </audio> 
+</div>
+<h2>By- {{podcast.podcast.name}}</h2>
+<h2>Title- {{podcast.title}}</h2>
+<h2>Description- {{podcast.description}}</h2-->
+<!--h1>{% if podcast.podcast == current_user %}
+    <a href = "{{url_for('update_podcast', podcast_id=podcast.id)}}">UPDATE SONG</a>
+    |
+    <a href = "{{url_for('delete_podcast', podcast_id=podcast.id)}}">DELETE SONG</a>
+        
+{% endif %}</h1-->
+<div class = "container">
+    <div class = "row">
+        <div class = "col col-xl-6">
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <div class = "row">
+   
+        {% if podcast.podcast == current_user %}
+        <div class = "col col-xl-6">
+            
+                <a href = "{{url_for('update_podcast', podcast_id=podcast.id)}}">
+                    <div class = "text-center">
+                        <button type="button" class="btn btn-primary text-white btn-sm">UPDATE PODCAST</button>
+                    </div>
+                </a>
+
+        </div>
+        <div class = "col col-xl-6">
+            <a href = "{{url_for('delete_podcast', podcast_id=podcast.id)}}" >
+                <div class = "text-center">
+                    <button type="button" class="btn btn-danger text-white btn-sm">
+                        DELETE PODCAST
+
+                    </button>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

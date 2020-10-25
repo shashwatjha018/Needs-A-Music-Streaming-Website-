@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Site made with Mobirise Website Builder v5.2.0, https://mobirise.com -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Mobirise v5.2.0, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="assets/images/logo5.png" type="image/x-icon">
+    <meta name="description" content="">
+
+
+    <title>Home</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/tether/tether.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/bootstrap/css/bootstrap-grid.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/bootstrap/css/bootstrap-reboot.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/socicon/css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/theme/css/style.css')}}">
+    <link rel="preload" as="style" href="{{url_for('static', filename = 'assets/mobirise/css/mbr-additional.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/mobirise/css/mbr-additional.css')}}"
+        type="text/css">
+
+
+
+
+</head>
+
+<body>
+    <header class="site-header">
+        {% if current_user.is_authenticated %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-warning fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4 text-dark" href="{{url_for('landing_page')}}">Needs</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('home')}}">Home</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('pod_landing')}}">Podcasts</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('post_landing')}}">Blogs</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('event_landing')}}">Events</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">Playlist</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{{url_for('global_playlist')}}">Around the
+                                    globe</a>
+                                <a class="dropdown-item text-dark"
+                                    href="{{url_for('playlist', user_id = current_user.id)}}">Your
+                                    Playlist</a>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-dark bg-warning" data-toggle="dropdown" href="#"
+                                role="button" aria-haspopup="true" aria-expanded="false">Upload</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{{url_for('new_song')}}">Song</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_podcast')}}">Podcast</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_post')}}">Blog</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_event')}}">Event</a>
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
+
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('account')}} ">Account Info</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('logout')}} ">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% else %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-warning fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4 text-dark" href="{{url_for('landing_page')}}">Needs</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('home')}}">Home</a>
+                    </div>
+
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link text-dark" href="{{url_for('register')}} ">Sign-Up</a>
+                    <a class="nav-item nav-link text-dark" href="{{url_for('login')}} ">Login</a>
+                </div>
+            </div>
+            </div>
+        </nav>
+        {% endif %}
+
+    </header>
+
+    <section class="header1 cid-s48MCQYojq mbr-fullscreen mbr-parallax-background" id="header1-f">
+
+
+
+        <div class="mbr-overlay" style="opacity: 0.1; background-color: rgb(255, 255, 255);"></div>
+
+        <div class="align-center container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1">NEEDS</h1>
+                    <h2 class="mbr-section-title mbr-fonts-style mb-3 display-2">A MUSIC STREAMING APP</h2>
+                    <p class="mbr-text mbr-fonts-style display-4"><br><strong><em>DESIGNED FOR MUSIC|ENGINEERED TO
+                                LAST<br></em></strong><br></p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content1 cid-s48udlf8KU" id="content1-8">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="title col-12 col-md-9">
+                    <h3 class="mbr-section-title mbr-fonts-style align-center mb-4 display-2"><strong>ABOUT</strong>
+                    </h3>
+                    <h4 class="mbr-section-subtitle align-center mbr-fonts-style mb-4 display-7">With NEEDS, it’s easy
+                        to find the right music or podcast for every moment – on your phone, your computer, your tablet
+                        and more. There are millions of tracks and episodes on NEEDS. So whether you’re behind the
+                        wheel, working out, partying or relaxing, the right music or podcast is always at your
+                        fingertips. Choose what you want to listen to, or let NEEDS surprise you. NEEDS gives you a
+                        personalized listening experience that continually evolves with your tastes.
+                        <div><br></div>
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features3 cid-sem3xTTQOl" id="features3-o">
+
+
+        <div class="container">
+            <div class="mbr-section-head">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                    <strong>Features</strong></h4>
+
+            </div>
+            <div class="row mt-4">
+                <div class="item features-image сol-12 col-md-6 col-lg-4">
+                    <div class="item-wrapper">
+                        <div class="item-img">
+                            <img src="{{url_for('static', filename = 'assets/images/the-weeknd-starboy-300x300.png')}}"
+                                data-slide-to="0" alt="">
+                        </div>
+                        <div class="item-content">
+                            <h5 class="item-title mbr-fonts-style display-7"><strong>SONGS</strong></h5>
+
+                            <p class="mbr-text mbr-fonts-style mt-3 display-7">Search and play your favorite songs in
+                                high quality and add free!</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="item features-image сol-12 col-md-6 col-lg-4">
+                    <div class="item-wrapper">
+                        <div class="item-img">
+                            <img src="{{url_for('static', filename = 'assets/images/images-225x225.jpg')}}"
+                                data-slide-to="1" alt="">
+                        </div>
+                        <div class="item-content">
+                            <h5 class="item-title mbr-fonts-style display-7"><strong>PODCASTS</strong></h5>
+
+                            <p class="mbr-text mbr-fonts-style mt-3 display-7">Listen to your favorite podcast across
+                                the globe.</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="item features-image сol-12 col-md-6 col-lg-4">
+                    <div class="item-wrapper">
+                        <div class="item-img">
+                            <img src="{{url_for('static', filename = 'assets/images/517hp6tkfhl-500x499.jpg')}}"
+                                data-slide-to="2" alt="">
+                        </div>
+                        <div class="item-content">
+                            <h5 class="item-title mbr-fonts-style display-7"><strong>EVENTS AND BLOGS</strong></h5>
+
+                            <p class="mbr-text mbr-fonts-style mt-3 display-7">Know about worldwide music festivals and
+                                read famous music blogs free!</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team2 cid-sem71mWNAm" xmlns="http://www.w3.org/1999/html" id="team2-p">
+
+
+        <div class="container">
+            <div class="card">
+                <div class="card-wrapper">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-4">
+                            <div class="image-wrapper">
+                                <img src="{{url_for('static', filename = 'assets/images/whatsapp-image-2020-10-24-at-23.31.52-532x1152.jpeg')}}"
+                                    alt="Shashwat">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md">
+                            <div class="card-box">
+                                <h5 class="card-title mbr-fonts-style m-0 display-5"><strong>Shashwat Jha</strong></h5>
+                                <h6 class="mbr-fonts-style mb-3 display-4"><strong>Co-creator, Needs</strong></h6>
+                                <p class="mbr-text mbr-fonts-style display-7">Hey, I am an undergraduate student
+                                    currently studying in VELLORE INSTITUTE OF TECHNOLOGY, VELLORE. I have made
+                                    this&nbsp;website as a project for my CSE2004: DATABASE MANAGEMENT SYSTEMS under Dr
+                                    K Saravanakumar.<br><strong>CONTACT NO</strong>: 8989010301<br><strong><em>EMAIL
+                                            ID</em></strong> : shashwatjha018@gmail.com&nbsp;<br><br></p>
+                                <div class="social-row display-7">
+                                    <div class="soc-item">
+                                        <a href="https://www.facebook.com/Mobirise/" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-facebook"></span>
+                                        </a>
+                                    </div>
+                                    <div class="soc-item">
+                                        <a href="https://twitter.com/mobirise" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-twitter"></span>
+                                        </a>
+                                    </div>
+                                    <div class="soc-item">
+                                        <a href="https://instagram.com/mobirise" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-instagram"></span>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-wrapper">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-4">
+                            <div class="image-wrapper">
+                                <img src="{{url_for('static', filename = 'assets/images/whatsapp-image-2020-10-24-at-23.31.23-422x505.jpg')}}"
+                                    alt="Mobirise">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md">
+                            <div class="card-box">
+                                <h5 class="card-title mbr-fonts-style m-0 display-5"><strong>Nidhi Pravin Rathi</strong>
+                                </h5>
+                                <h6 class="mbr-fonts-style mb-3 display-4"><strong>Co-creator, Needs</strong></h6>
+                                <p class="mbr-text mbr-fonts-style display-7">Hey, I am an undergraduate student
+                                    currently studying in VELLORE INSTITUTE OF TECHNOLOGY, VELLORE. I have made this
+                                    website as a project for my CSE2004: DATABASE MANAGEMENT SYSTEMS under Dr K
+                                    Saravanakumar.
+                                    <br>CONTACT NO:&nbsp;9028970054<br>EMAIL ID :nidhirathi2312@gmail.com&nbsp;<br></p>
+                                <div class="social-row display-7">
+                                    <div class="soc-item">
+                                        <a href="https://www.facebook.com/Mobirise/" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-facebook"></span>
+                                        </a>
+                                    </div>
+                                    <div class="soc-item">
+                                        <a href="https://twitter.com/mobirise" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-twitter"></span>
+                                        </a>
+                                    </div>
+                                    <div class="soc-item">
+                                        <a href="https://instagram.com/mobirise" target="_blank">
+                                            <span class="mbr-iconfont socicon socicon-instagram"></span>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="footer7 cid-sem9p8xPSI" once="footers" id="footer7-r">
+
+
+
+
+
+        <div class="container">
+            <div class="media-container-row align-center mbr-white">
+                <div class="col-12">
+                    <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                        © Copyright 2020 Needs - All Rights Reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; color:#aaa; font-size:12px; padding: 0; align-items: center; display: flex;">
+        <a href="https://mobirise.site/q" style="flex: 1 1; height: 3rem; padding-left: 1rem;"></a>
+        <p style="flex: 0 0 auto; margin:0; padding-right:1rem;">Design a website with <a href="https://mobirise.site/z"
+                style="color:#aaa;">Mobirise</a></p>
+    </section>
+    <script src="assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="assets/popper/popper.min.js"></script>
+    <script src="assets/tether/tether.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/smoothscroll/smooth-scroll.js"></script>
+    <script src="assets/parallax/jarallax.min.js"></script>
+    <script src="assets/theme/js/script.js"></script>
+
+
+</body>
+
+</html>

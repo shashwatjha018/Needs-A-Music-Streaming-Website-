@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<!--div>
+    <h1>Welcome to Needs</h1>
+    <img src="{{url_for('static', filename ='profile_pic/' + post.author.image_file)}}">
+    <div>
+        <a href="#">{{post.author.username}}</a>
+        <small>{{post.date_posted.strftime('%Y-%m-%d')}}</small>
+    </div>
+    <div>
+        <h2>{{post.title}}</h2>
+        <p>{{post.content}}</p>
+    </div>
+    {% if post.author == current_user %}
+        <a href = "{{url_for('update_post', post_id=post.id)}}">UPDATE POST</a>
+        |
+        <a href = "{{url_for('delete_post', post_id=post.id)}}">DELETE POST</a>
+    {% endif %}
+
+</div-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-6">
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{post.author.username}}</a>
+                        <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d')}}</small>
+                    </div>
+                    <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col col-xl-4">
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <div class="row">
+
+        {% if post.author == current_user %}
+        <div class="col col-xl-6">
+
+            <a href="{{url_for('update_post', post_id=post.id)}}">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary text-white btn-sm">UPDATE POST</button>
+                </div>
+            </a>
+
+        </div>
+        <div class="col col-xl-6">
+            <a href="{{url_for('delete_post', post_id=post.id)}}">
+                <div class="text-center">
+                    <button type="button" class="btn btn-danger text-white btn-sm">
+                        DELETE POST
+
+                    </button>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

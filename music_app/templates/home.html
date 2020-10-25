@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<!--div class = "text-white bg-dark" -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4">
+            <form class = "form-inline my-2 my-lg-0" method="GET">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search Song" name="search"
+                aria-label="Search Song">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Song</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <h1>Song Library</h1>
+    <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% if not songs: %}
+            <h2 class="alert alert-danger text-center" role="alert">Sorry! We have no songs to show yet!</h2>
+            {% else %}
+            {% for song in songs%}
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <a href="{{url_for('song', song_id = song.id)}}" class="text-decoration-none">
+                    <img src="{{url_for('static', filename ='covers/' + song.image_file)}}" height="200px" ,
+                        width="200px" class="img-rounded rounded mx-auto d-block">
+                </a>
+                <a href="{{url_for('song', song_id = song.id)}}"
+                    class="text-decoration-none text-uppercase text-center">
+                    <h4>{{song.name}}</h4>
+                </a>
+                <h4 class="text-center">By- {{song.singer.name}}</h4>
+                <h4 class="text-center">Genre-{{song.genre}}</h4>
+                {% if my_playlist %}
+                <!--a href="{{url_for('add_song', user_id = user.id, song_id = song.id, playlist_id = my_playlist.id)}}"
+                    class="text-decoration-none text-uppercase">
+                    <p class= "text-center" >Add to playlist</p>
+                </a-->
+                <a href = "{{url_for('add_song', user_id = user.id, song_id = song.id, playlist_id = my_playlist.id)}}">
+                    <div class = "text-center">
+                        <button type="button" class="btn btn-primary text-white btn-sm">Add to playlist</button>
+                    </div>
+                </a>
+                <br>
+                <br>
+                <br>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+        
+    </div>
+    </div>
+    </div>
+    {% endblock %}

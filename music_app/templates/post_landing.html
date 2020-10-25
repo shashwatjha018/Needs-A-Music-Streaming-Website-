@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4">
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Blogs" name="search"
+                    aria-label="Search Blogs">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Blogs</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<!--div>
+    <h1 class = "text-center">Music Blogs around the World</h1>
+    {%if not posts %}
+    <h3 class="alert alert-danger text-center" role="alert">Sorry! We have no blogs to show yet</h3>
+    {% else %}
+        {% for post in posts %}
+            <img src="{{url_for('static', filename ='profile_pic/' + post.author.image_file)}}">
+            <article class="media content-section">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author.username }}</a>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                  </div>
+                  <h2><a class="article-title" href="{{url_for('post', post_id = post.id)}}">{{ post.title }}</a></h2>
+                  <p class="article-content">{{ post.content }}</p>
+                </div>
+              </article>
+        {% endfor %}
+    
+    {% endif %}
+</div-->
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-6">
+            {% for post in posts %}
+            <article class="media content-section">
+                <img class="rounded-circle article-img"
+                    src="{{url_for('static', filename ='profile_pic/' + post.author.image_file)}}" alt="Author">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{post.author.username}}</a>
+                        <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d')}}</small>
+                    </div>
+                    <h2><a class="article-title" href="{{url_for('post', post_id = post.id)}}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                </div>
+            </article>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+{% endblock%}

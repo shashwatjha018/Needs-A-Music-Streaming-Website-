@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    {% if user.playlist_id == None %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ form.name.label(class="form-control-label") }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    {% elif my_playlist%}
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 28rem;">
+                    <div class="card-header text-center">
+                        Your Playlist&nbsp-{{my_playlist.name}}
+                    </div>
+                    {% for song in contains %}
+                    {% for artist in artists %}
+                    {% if artist.id == song.contains.artist_id%}
+                    <div style="overflow: hidden;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="{{url_for('song', song_id = song.song_id)}}">
+                                    <p style="float: left;">{{song.contains.name}}&nbsp-{{artist.name}}</p>
+                                </a>
+                                <a href="{{url_for('remove_song', user_id = user.id, contains_id = song.id)}}">
+                                    <div class="text-center">
+                                        <p style="float: right;"><button type="button"
+                                                class="btn btn-danger text-white btn-sm">
+                                                Remove from playlist
+                                            </button></p>
+                                    </div>
+                                </a></li>
+
+                        </ul>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <h2>Your playlist is empty </h2>
+
+    {% endif %}
+
+    {% endblock %}

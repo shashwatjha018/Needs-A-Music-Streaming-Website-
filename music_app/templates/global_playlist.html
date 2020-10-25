@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-left">
+    &nbsp Listen to playlist from all over the world
+</h1>
+<div class='container'>
+    <div class='row'>
+        <div class='col-1'>
+
+        </div>
+        <div class='col-5'>
+
+
+            <br>
+            {% for playlist in playlists %}
+            <div class="card align-item-center d-flex justify-content-center" style="width: 50rem;">
+                <div class="card-header text-center">
+                    <h3>{{playlist.name}} &nbsp BY-{{playlist.user.username}}<h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for contain in contains %}
+                    {% if playlist.id == contain.playlist_id%}
+                    {% for artist in artists %}
+                    {% if artist.id == contain.contains.artist_id%}
+                    <li class="list-group-item"><a href="{{url_for('song', song_id = contain.song_id)}}">
+                            <p class="text-center">{{contain.contains.name}} &nbsp - {{artist.name}}<p>
+                        </a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

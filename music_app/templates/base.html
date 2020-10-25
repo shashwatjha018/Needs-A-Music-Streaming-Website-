@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+    .audioplayer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        box-sizing: border-box;
+        margin: 1em 0;
+        padding: 0 24px;
+        width: 100%;
+        height: 96px;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        border: 1px solid #dde2e6;
+        border-radius: 4px;
+        background: #fff
+    }
+
+    .audioplayer-playpause {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        cursor: pointer;
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause {
+        background: rgba(91, 130, 255, 0);
+        border: none
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause:hover {
+        background: rgba(91, 130, 255, .1)
+    }
+
+    .audioplayer-playing .audioplayer-playpause {
+        background: rgba(253, 79, 26, 0);
+        border: none
+    }
+
+    .audioplayer-playing .audioplayer-playpause:hover {
+        background: rgba(235, 79, 26, .1)
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause a {
+        content: '';
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        border-top: 7px solid transparent;
+        border-right: none;
+        border-bottom: 7px solid transparent;
+        border-left: 12px solid #0059ff
+    }
+
+    .audioplayer-playing .audioplayer-playpause a {
+        content: '';
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        width: 12px;
+        height: 14px
+    }
+
+    .audioplayer-playing .audioplayer-playpause a:before,
+    .audioplayer-playing .audioplayer-playpause a:after {
+        content: '';
+        width: 4px;
+        height: 14px;
+        background-color: #fd4f1a
+    }
+
+    .audioplayer-time {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 40px;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-size: 12px;
+        color: rgba(51, 51, 51, .6)
+    }
+
+    .audioplayer-time-current {
+        margin-left: 24px
+    }
+
+    .audioplayer-time-duration {
+        margin-right: 24px
+    }
+
+    .audioplayer-bar {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin: 0 12px;
+        height: 12px;
+        -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        cursor: pointer
+    }
+
+    .audioplayer-bar:before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        width: 100%;
+        height: 2px;
+        background-color: #dde2e6
+    }
+
+    .audioplayer-bar>div {
+        position: absolute;
+        left: 0;
+        top: 5px
+    }
+
+    .audioplayer-bar-loaded {
+        z-index: 1;
+        height: 2px;
+        background: #bec8d2
+    }
+
+    .audioplayer-bar-played {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+        z-index: 2;
+        height: 2px;
+        background: #333
+    }
+
+    .audioplayer-bar-played:after {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: absolute;
+        content: '';
+        box-sizing: border-box;
+        top: -5px;
+        right: -1px;
+        margin-right: -5px;
+        width: 12px;
+        height: 12px;
+        background-color: #fff;
+        border-radius: 6px
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-bar-played:after {
+        border: 2px solid #bec8d2
+    }
+
+    .audioplayer-playing .audioplayer-bar-played:after {
+        border: 2px solid #0059ff
+    }
+
+    .audioplayer-volume {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center
+    }
+
+    .audioplayer-volume-button {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        cursor: pointer
+    }
+
+    .audioplayer-volume-button a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 6px;
+        height: 8px;
+        background-color: #9a9fb0;
+        position: relative
+    }
+
+    .audioplayer-volume-button a:before,
+    .audioplayer-volume-button a:after {
+        content: '';
+        position: absolute
+    }
+
+    .audioplayer-volume-button a:before {
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-right: 9px solid #9a9fb0;
+        border-bottom: 8px solid transparent;
+        border-left: none;
+        top: -4px
+    }
+
+    .audioplayer:not(.audioplayer-mute) .audioplayer-volume-button a:after {
+        left: 10px;
+        top: 0;
+        width: 6px;
+        height: 6px;
+        border: 6px double #9a9fb0;
+        border-width: 6px 6px 0 0;
+        border-radius: 0 12px 0 0;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg)
+    }
+
+    .audioplayer-mute .audioplayer-volume-button a {
+        background-color: #fd4f1a
+    }
+
+    .audioplayer-mute .audioplayer-volume-button a:before {
+        border-right: 9px solid #fd4f1a
+    }
+
+    .audioplayer-volume-adjust {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-left: 8px
+    }
+
+    .audioplayer-volume-adjust>div {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 60px;
+        height: 2px;
+        cursor: pointer;
+        background-color: #bec8d2
+    }
+
+    .audioplayer-volume-adjust div div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background-color: #0059ff
+    }
+
+    @media screen and (max-width:679px) {
+        .audioplayer-volume-adjust {
+            display: none
+        }
+    }
+
+    /* :: 9.0 Music CSS */
+    .poca-music-area {
+        position: relative;
+        z-index: 2;
+        background-color: #ffffff;
+    }
+
+    .poca-music-area .poca-music-thumbnail {
+        position: relative;
+        z-index: 1;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 260px;
+        flex: 0 0 260px;
+        max-width: 260px;
+        width: 260px;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .poca-music-area .poca-music-thumbnail {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 300px;
+            flex: 0 0 300px;
+            max-width: 300px;
+            width: 300px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-thumbnail {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    .poca-music-area .poca-music-content {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(100% - 260px);
+        flex: 0 0 calc(100% - 260px);
+        max-width: calc(100% - 260px);
+        width: calc(100% - 260px);
+        position: relative;
+        z-index: 1;
+        padding: 30px;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .poca-music-area .poca-music-content {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 calc(100% - 300px);
+            flex: 0 0 calc(100% - 300px);
+            max-width: calc(100% - 300px);
+            width: calc(100% - 300px);
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-content {
+            padding: 20px;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    .poca-music-area .poca-music-content .music-published-date {
+        font-size: 12px;
+        display: block;
+        text-transform: uppercase;
+        color: #f55656;
+        letter-spacing: 1px;
+        font-weight: bold;
+    }
+
+    .poca-music-area .poca-music-content h2 {
+        font-size: 36px;
+        display: block;
+        margin-bottom: 5px;
+        line-height: 1.3;
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        .poca-music-area .poca-music-content h2 {
+            font-size: 24px;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .poca-music-area .poca-music-content h2 {
+            font-size: 24px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-content h2 {
+            font-size: 20px;
+        }
+    }
+
+    .poca-music-area .poca-music-content .music-meta-data p {
+        text-transform: uppercase;
+        color: #666666;
+        font-size: 14px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-content .music-meta-data p {
+            font-size: 12px;
+        }
+    }
+
+    .poca-music-area .poca-music-content .music-meta-data p a {
+        text-transform: uppercase;
+        color: #666666;
+        font-size: 14px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-content .music-meta-data p a {
+            font-size: 12px;
+        }
+    }
+
+    .poca-music-area .poca-music-content .music-meta-data p a:focus,
+    .poca-music-area .poca-music-content .music-meta-data p a:hover {
+        color: #f55656;
+    }
+
+    .poca-music-area .poca-music-content .likes-share-download {
+        position: relative;
+        z-index: 1;
+        padding-top: 15px;
+        border-top: 1px solid #ebebeb;
+    }
+
+    .poca-music-area .poca-music-content .likes-share-download a {
+        color: #a6a6a6;
+        font-size: 14px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .poca-music-area .poca-music-content .likes-share-download a {
+            font-size: 12px;
+        }
+    }
+
+    .poca-music-area .poca-music-content .likes-share-download a:focus,
+    .poca-music-area .poca-music-content .likes-share-download a:hover {
+        color: #f55656;
+    }
+
+    .poca-music-area.style-2 {
+        margin-bottom: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .poca-music-area.style-2 .poca-music-thumbnail {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .poca-music-area.style-2 .poca-music-content {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .audioplayer {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: auto;
+        border: none;
+        border-radius: 0;
+        padding-bottom: 10px;
+    }
+
+    .audioplayer .audioplayer-playpause {
+        width: 35px;
+        height: 35px;
+        transition: all 0 ease-in-out;
+    }
+
+    .audioplayer .audioplayer-bar::before {
+        top: 2px;
+        height: 5px;
+        background-color: #e1e1e1;
+    }
+
+    .audioplayer .audioplayer-bar>div {
+        top: 2px;
+    }
+
+    .audioplayer .audioplayer-bar-loaded {
+        display: none;
+    }
+
+    .audioplayer .audioplayer-bar-played {
+        background: #f55656;
+        height: 5px;
+    }
+
+    .audioplayer .audioplayer-bar-played::after {
+        display: none;
+    }
+
+    .audioplayer .audioplayer-time {
+        font-size: 14px;
+        color: #232323;
+        font-weight: 600;
+    }
+
+    .audioplayer .audioplayer-volume-adjust>div {
+        height: 5px;
+    }
+
+    .audioplayer .audioplayer-volume-adjust div div {
+        background-color: #f55656;
+        height: 5px;
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause,
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause:hover {
+        background-color: #f55656;
+    }
+
+    .audioplayer:not(.audioplayer-playing) .audioplayer-playpause a {
+        margin-left: 3px;
+        border-left: 12px solid #ffffff;
+    }
+</style>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
+
+    {% if title  %}
+    <title>Needs - {{title}}</title>
+    {% else %}
+    <title>Welcome to Needs</title>
+
+    {% endif %}
+    <script type='text/javascript' src="/static/jquery-3.5.1.js"></script>
+
+</head>
+
+<body>
+    <header class="site-header">
+        {% if current_user.is_authenticated %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-warning fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4 text-dark" href="{{url_for('landing_page')}}">Needs</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('home')}}">Home</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('pod_landing')}}">Podcasts</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('post_landing')}}">Blogs</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('event_landing')}}">Events</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">Playlist</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{{url_for('global_playlist')}}">Around the
+                                    globe</a>
+                                <a class="dropdown-item text-dark"
+                                    href="{{url_for('playlist', user_id = current_user.id)}}">Your
+                                    Playlist</a>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-dark bg-warning" data-toggle="dropdown" href="#"
+                                role="button" aria-haspopup="true" aria-expanded="false">Upload</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{{url_for('new_song')}}">Song</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_podcast')}}">Podcast</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_post')}}">Blog</a>
+                                <a class="dropdown-item text-dark" href="{{url_for('new_event')}}">Event</a>
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
+
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('account')}} ">Account Info</a>
+                        <a class="nav-item nav-link text-dark" href="{{url_for('logout')}} ">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% else %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-warning fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4 text-dark" href="{{url_for('landing_page')}}">Needs</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link text-dark" href="{{url_for('home')}}">Home</a>
+                    </div>
+
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link text-dark" href="{{url_for('register')}} ">Sign-Up</a>
+                    <a class="nav-item nav-link text-dark" href="{{url_for('login')}} ">Login</a>
+                </div>
+            </div>
+            </div>
+        </nav>
+        {% endif %}
+
+    </header>
+
+    <!--div class = "text-white bg-dark"-->
+    <br>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages%}
+        {%for category, message in messages%}
+        <div class="alert alert-{{category}}">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/poca.bundle.js"></script>
+    <!-- Active js -->
+    <script src="js/default-assets/active.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4">
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Events" name="search"
+                    aria-label="Search Blogs">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Events</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-6">
+            {% for event in events %}
+            {% for place in places %}
+            {% for city in cities %}
+            {% for e in event_status %}
+
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">City-{{city.name}}</a>
+                        <small class="text-muted">State-{{city.state}}</small>
+                    </div>
+                    <h2><a class="article-title" href="#">Event Name- {{ event.name }}</a></h2>
+                    <p class="article-content">Event Time-{{ event.time }}</p>
+                    <p class="article-content">Place Name-{{ place.name }}</p>
+                    <p class="article-content">Pincode-{{ place.pincode }}</p>
+                    <p class="article-content">Begin Date-{{ e.begin_date }}</p>
+                    <p class="article-content">End Date-{{ e.end_date }}</p>
+                </div>
+            </article>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+{% endblock%}

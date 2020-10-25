@@ -1,0 +1,114 @@
+div>
+    <audio controls>
+        <source src="{{url_for('static', filename ='/song_dir/' + song.song_file)}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+    </audio> 
+</div>
+<h2>By- {{song.singer.name}}</h2>
+<h2>Genre- {{song.genre}}</h2>
+{% if song.singer == current_user %}
+    <a href = "{{url_for('update_song', song_id=song.id)}}">UPDATE SONG</a>
+    |
+    <a href = "{{url_for('delete_song', song_id=song.id)}}">DELETE SONG</a>
+        
+{% endif %}
+{% extends "base.html" %}
+{% block content %}
+<h1>Playlist</h1>
+<div>
+    {% if user.playlist_id == None %}
+        <form method = 'POST', action = '' enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            {{form.name.label}}
+            {{form.name()}}
+            {{form.submit()}}
+    {% elif my_playlist %}
+        <!--h1>{{my_playlist.name}}</h1>
+        {% for song in contains %}
+        <a href="{{url_for('song', song_id = song.song_id)}}">
+            <h2>{{song.contains.name}}</h2>
+        </a>
+            <a href = "{{url_for('remove_song', user_id = user.id, contains_id = song.id)}}">Delete from playlist</a>
+        {% endfor %}<h3-->
+
+        </div-->
+        <h1 class = "text-center">Your Playlist-{{my_playlist.name}}</h1>
+        <br>
+        <br>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-12 col-sm-6 col-md-4 col-xl-4 ">
+                    <h2 class = "text-center">Songs<h2>
+                </div>
+                <div class = "col-12 col-sm-6 col-md-4 col-xl-4 ">
+                    <h2 class = "text-center">Artist<h2>
+                </div>
+                <div class = "col-12 col-sm-6 col-md-4 col-xl-4">
+                
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class = "row">
+                <div class = "col-12 col-sm-6 col-md-4 col-xl-4">
+                {% for song in contains %}
+                    <a href="{{url_for('song', song_id = song.song_id)}}">
+                        <h4 class = "text-center ">{{song.contains.name}}</h4>
+                    </a>
+                    <br>
+                    <br>
+                    {% endfor %}
+                </div>
+                        
+                <div class = "col-12 col-sm-6 col-md-4 col-xl-4">
+                    {% for song in contains %}
+                        {% for artist in artists %}
+                            {% if artist.id == song.contains.artist_id%}
+                            <h5 class = "text-center">{{artist.name}}</h5>
+                            <br>
+                            <br>
+                            {% endif %}
+
+                        {% endfor%}
+                    {% endfor %}
+            </div>
+            {% for song in contains %}
+            <div class = "col-12 col-sm-6 col-md-4 col-xl-4">
+                    <a href = "{{url_for('remove_song', user_id = user.id, contains_id = song.id)}}" >
+                        <div class = "text-center">
+                            <button type="button" class="btn btn-danger text-white btn-sm">
+                                Remove from playlist
+                            </button>
+                        </div>
+                    </a>
+                    <br>
+                    <br>        
+                {% endfor %}
+            </div>
+
+
+                
+            </div>
+            
+        
+        </div>
+    {% else %}
+        <h2>Your {{my_playlist.name}} is empty </h2>
+    {% endif %}        
+
+
+{% endblock %}
+
+
+
+
+<!--h1>Listen to playlist from all over the world</h1>
+{% for playlist in playlists %}
+    <h1>{{playlist.name}} -- {{playlist.user.username}}</h1>
+    {% for contain in contains %}
+        {% if playlist.id == contain.playlist_id%}
+        <a href="{{url_for('song', song_id = contain.song_id)}}"><h4>{{contain.contains.name}}</h4></a>
+        {% endif %}
+    {% endfor %}
+    
+{% endfor %}</h1-->
