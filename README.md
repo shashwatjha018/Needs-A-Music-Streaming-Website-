@@ -111,7 +111,7 @@ Developed for users to listen to their favourite music or podcast, make their ow
 
 **Account Information Page**
 
-![image](https://user-images.githubusercontent.com/68782027/137212477-a520d298-51f4-4c9e-ab2f-f3930c581bc5.png)
+![image](https://user-images.githubusercontent.com/68782027/137215010-8bd3a8ce-d431-46ab-96ca-a9dc2b601242.png)
 ## Made By
 
 - [@shashwatjha018](https://github.com/shashwatjha018)
