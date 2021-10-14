@@ -1,5 +1,10 @@
 # NEEDS- A Music/Podcast Streaming Web Application
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+<span>
+ <img src = 'https://img.shields.io/badge/Made%20with-Python-1f425f.svg'>
+ <img src = 'https://img.shields.io/badge/License-GPL%20v3-yellow.svg'>
+ <img src = 'https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white'>
+ <img src = 'https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white'>
+</span>
 
 **LIVE LINK:** [Visit the application/project here. ](https://needsmusic.herokuapp.com/)
 
